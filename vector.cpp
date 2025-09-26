@@ -43,4 +43,8 @@ class vector {
         return this->current;
     
     };
+    ~vector(){
+        delete [] this->data;
+    }
+
 };
