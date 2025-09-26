@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 template <typename T>
-class vector {
+class Vector {
     private :
     T* data;
     int size ;
@@ -19,7 +19,7 @@ class vector {
 
     }
     public :
-    vector(){
+    Vector(){
         this->size = 1;
         this->current = 0;
         this->data = new T[this->size];
