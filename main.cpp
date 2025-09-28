@@ -61,23 +61,21 @@ void showMenu(student* loggedInStudent, Vector<club*>& allClubs) {
     while (true) {
         cout << "\n--- Student Menu ---" << endl;
         cout << "1. View My Clubs" << endl;
-        cout << "2. View All University Clubs" << endl;
+        cout << "2. View All Clubs" << endl;
         cout << "3. Logout" << endl;
         cout << "Enter your choice: ";
         int choice;
         cin >> choice;
-
         if (cin.fail()) {
             cout << "Invalid input. Please enter a number." << endl;
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             continue;
         }
 
         if (choice == 1) {
             loggedInStudent->viewMyClubs();
         } else if (choice == 2) {
-            cout << "\nAll University Clubs:" << endl;
+            cout << "\nAll  Clubs:" << endl;
             for (int i = 0; i < allClubs.size(); ++i) {
                 cout << " - " << allClubs.get(i)->getname() << endl;
             }
@@ -116,7 +114,7 @@ int main() {
         if (cin.fail()) {
             cout << "Invalid input. Please enter a number." << endl;
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    
             continue;
         }
 
