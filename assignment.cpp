@@ -1,0 +1,25 @@
+#include <bits/stdc++.h>
+#include <chrono>
+class club;
+using namespace std;
+class assignment {
+private:
+    string title;
+    int maxScore;
+    club* issuingClub;
+    chrono::system_clock::time_point deadline;
+public:
+    assignment(const string& initialTitle, int initialMaxScore, club* creator, const chrono::system_clock::time_point& due) {
+        this->title = initialTitle;
+        this->maxScore = initialMaxScore;
+        this->issuingClub = creator;
+        this->deadline = due;
+    }
+    string gettitle() const {
+        return this->title;
+    }
+    bool isPastDeadline() const {
+        return chrono::system_clock::now() > this->deadline;
+    }
+};
+
