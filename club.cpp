@@ -50,6 +50,22 @@ public :
             cout << "Permission DENIED. You cannot create assignments." << endl;
         }
     }
-
+    void viewAllAssignments() const {
+        cout << "assignments for " << this->clubName << ":" << endl;
+        if (this->assignments.size() == 0) {
+            cout << "  - no assingment created" << endl;
+            return;
+        }
+        for (int i = 0; i < this->assignments.size(); i++) {
+            cout << "  " << i << ": " << this->assignments.get(i)->gettitle() << endl;
+        }
+    }
+    assignment* getAssignment(int index) {
+        if (index >= 0 && index < this->assignments.size()) {
+            return this->assignments.get(index);
+        }
+        cout << "invalid index" << endl;
+        return nullptr; 
+    }
 
 };
