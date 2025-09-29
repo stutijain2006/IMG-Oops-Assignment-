@@ -12,6 +12,8 @@
 #include "assignment.cpp"
 #include "studentassignment.cpp"
 #include "membersrole.cpp"
+#include "club.cpp"
+#include "student.cpp"
 
 using namespace std;
 
@@ -62,6 +64,7 @@ void showMenu(student* loggedInStudent, Vector<club*>& allClubs) {
         cout << "\n--- Student Menu ---" << endl;
         cout << "1. View My Clubs" << endl;
         cout << "2. View All Clubs" << endl;
+        cout<<"3. Create a club"<<endl;
         bool hasAdminRole = false;
         Vector <membersRole*> myMemberships = loggedInStudent->getMemberships();
         for (int i=0; i< myMemberships.size(); i++){
@@ -70,7 +73,7 @@ void showMenu(student* loggedInStudent, Vector<club*>& allClubs) {
                 break;
             }
         }
-        if (hasAdminRole) cout << "3. Club Admin Panel"<< endl;
+        if (hasAdminRole) cout << "4. Club Admin Panel"<< endl;
         cout << "9. Logout" << endl;
         cout << "Enter your choice: ";
         int choice;
@@ -89,7 +92,22 @@ void showMenu(student* loggedInStudent, Vector<club*>& allClubs) {
                 cout << " - " << allClubs.get(i)->getname() << endl;
             }
         }
-            else if (choice == 3) {
+        else if (choice == 3) {
+            string clubName, clubAbout;
+            cout << "Enter Club Name: ";
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            getline(cin, clubName);
+            cout << "Enter Club Description: ";
+            getline(cin, clubAbout);
+            club* newClub = new club(clubName, clubAbout);
+            allClubs.push(newClub);
+            membersRole* newMembership = new membersRole(loggedInStudent, newClub, new AdminRole());
+            newClub->addMember(newMembership);
+            loggedInStudent->addmembership(newMembership);
+            allMemberships.push(newMembership);
+            cout << "Club '" << clubName << "' created successfully." << endl;
+        }
+            else if (choice == 4) {
                 cout<< "\nEnter the name of the club you want to access: " << endl;
                 Vector<membersRole*> myMemberships = loggedInStudent->getMemberships();
                 int adminCount=0;
@@ -118,6 +136,7 @@ void showMenu(student* loggedInStudent, Vector<club*>& allClubs) {
                 cout << "4. View All Assignments" << endl;
                 cout << "5. Extend Assignment Deadline" << endl;
                 cout <<"6. View all Members" << endl;
+                cout <<"7. Make a student admin"<< endl;
 
                 int adminChoice;
                 cin >> adminChoice;
@@ -194,6 +213,28 @@ void showMenu(student* loggedInStudent, Vector<club*>& allClubs) {
                 else if (adminChoice == 6) {
                     selectedClub->listAllMembers();
                 }
+                else if (adminChoice == 7) {
+                    cout << "Enter the roll number of the student to make admin: ";
+                    string rollToMakeAdmin;
+                    cin >> rollToMakeAdmin;
+                    student* studentToMakeAdmin = nullptr;
+                    for (int i = 0; i < allStudents.size(); ++i) {
+                        if (allStudents.get(i)->getrollnum() == rollToMakeAdmin) {
+                            studentToMakeAdmin = allStudents.get(i);
+                            break;
+                        }
+                    }
+                    if (!studentToMakeAdmin) {
+                        cout << "Student with roll number " << rollToMakeAdmin << " not found." << endl;
+                        continue;
+                    }
+                    else {
+                        membersRole* newAdminMembership = new membersRole(studentToMakeAdmin, selectedClub, new AdminRole());
+                        selectedClub->addMember(newAdminMembership);
+                        studentToMakeAdmin->addmembership(newAdminMembership);
+                        cout << "Student promoted to admin successfully." << endl;
+                    }
+                }
                 else {
                     cout << "Invalid choice. Please try again." << endl;
                 }
@@ -235,7 +276,7 @@ int main() {
             cout << "Invalid input. Please enter a number." << endl;
             cin.clear();
     
-            continue;
+            break;
         }
 
         if (choice == 1) {
