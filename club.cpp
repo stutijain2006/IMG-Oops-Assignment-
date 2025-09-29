@@ -51,6 +51,37 @@ void club::viewAllAssignments() const {
         cout << "  " << i << ": " << this->assignments.get(i)->gettitle() << endl;
     }
 }
+
+void club::extendAssignmentDeadline(int index, int additionalSeconds, membersRole* extender) {
+    if (extender->getRole()->canGradeSubmissions()) {
+        if (index >= 0 && index < this->assignments.size()) {
+            this->assignments.get(index)->extendDeadline(additionalSeconds);
+            cout << "Deadline extended successfully." << endl;
+        } else {
+            cout << "Error: Invalid assignment number." << endl;
+        }
+    } else {
+        cout << "Permission denied. You do not have the rights to extend deadlines." << endl;
+    }
+}
+
+void club::removeMember(student *s, membersRole *remover){
+    if (!remover->getRole()->canRemoveMembers()) {
+        cout << "Permission denied. You do not have the rights to remove members." << endl;
+        return;
+    }
+
+    for( int i=0; i< this->members.size(); i++){
+        if (this->members.get(i)->getStudent() == s){
+            this->members.remove(i);
+            cout << s->getname() << " has been removed from the club " << this->name << "." << endl;
+            return;
+        }
+    }   
+    cout<< s->getname() << " is not a member of the club " << this->name << "." << endl;
+}
+
+
 assignment* club::getAssignment(int index) {
     if (index >= 0 && index < this->assignments.size()) {
         return this->assignments.get(index);

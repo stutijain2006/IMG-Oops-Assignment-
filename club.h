@@ -22,5 +22,7 @@ public:
     void listAllMembers() const;
     void createAssignment(const string& title, int maxScore, int secondsUntilDue, membersRole* creator);
     void viewAllAssignments() const;
+    void removeMember(student* s, membersRole* remover);
+    void extendAssignmentDeadline(int index, int additionalSeconds, membersRole* extender);
     assignment* getAssignment(int index);
 };

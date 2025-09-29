@@ -31,7 +31,34 @@ void student::viewMyClubs() const {
     for (int i = 0; i < this->memberships.size(); ++i) {
         membersRole* currentMembership = this->memberships.get(i);
         club* associatedClub = currentMembership->getClub();
-        cout << "  - " << associatedClub->getname() << endl;
+        cout << "  ["<<i+1<<"]" << associatedClub->getname() << endl;
+    }
+
+    cout<<"\nEneter club number to view its assignments "<<endl;
+    int choice;
+    cin>>choice;
+    if(choice<1 || choice> this->memberships.size()){
+        cout<<"Invalid choice"<<endl;
+        return;
+    }
+
+    membersRole* selectedMembership = this->memberships.get(choice-1);
+    club* selectedClub = selectedMembership->getClub();
+    cout<< "\nAssignments for club: " << selectedClub->getname() << endl;
+    selectedClub->viewAllAssignments();
+}
+
+void student::viewMyAssignments() const {
+    cout << "\nAssignments submitted by " << this->name << ":" << endl;
+    if (this->submissions.size() == 0) {
+        cout << "  - You have not submitted any assignments yet." << endl;
+        return;
+    }
+    for (int i = 0; i < this->submissions.size(); ++i) {
+        membersRole* currentMembership = this->memberships.get(i);
+        club* c = currentMembership->getClub();
+        cout<< "  - " << c->getname() << endl;
+        cout<< "    Assignment: " << this->submissions.get(i)->getAssignment()->gettitle() << endl;
     }
 }
 void student::submitAssignment(assignment* theAssignment) {

@@ -20,5 +20,9 @@ public:
     bool checkPassword(const string& attempt) const;
     void addmembership(membersRole* newMembership);
     void viewMyClubs() const;
+    void viewMyAssignments() const;
     void submitAssignment(assignment* theAssignment);
+    Vector<membersRole*> getMemberships() const {
+        return this->memberships;
+    }
 };

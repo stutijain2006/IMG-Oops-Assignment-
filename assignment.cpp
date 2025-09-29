@@ -19,8 +19,21 @@ public:
     string gettitle() const {
         return this->title;
     }
+
+    int getmaxScore() const {
+        return this->maxScore;
+    }
+    chrono::system_clock::time_point getDeadline() const {
+        return this->deadline;
+    }
+    club* getIssuingClub() const {
+        return this->issuingClub;
+    }
     bool isPastDeadline() const {
         return chrono::system_clock::now() > this->deadline;
+    }
+    void extendDeadline(int additionalSeconds) {
+        this->deadline += chrono::seconds(additionalSeconds);
     }
 };
 
